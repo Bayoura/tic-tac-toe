@@ -33,6 +33,7 @@ h1 {
 
 .gameboard-container > div {
     border: 1px solid black;
+    grid-column: span 3;
 }
 
 button {
