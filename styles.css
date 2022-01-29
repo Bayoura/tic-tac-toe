@@ -7,6 +7,11 @@
     font-family:'Lucida Sans', sans-serif;
 }
 
+:root {
+    --cell-size: 150px;
+    --mark-size: calc(var(--cell-size) * 0.9);
+}
+
 /* the grid display is to push the footer to the bottom */
 body {
     min-height: 100vh;
@@ -27,9 +32,45 @@ h1 {
     margin-top: 50px;
     display: grid;
     justify-content: center;
-    grid-template-columns: repeat(3, 150px);
-    grid-template-rows: repeat(3, 150px);
+    grid-template-columns: repeat(3, var(--cell-size));
+    grid-template-rows: repeat(3, var(--cell-size));
     gap: 2px;
+}
+
+/* we need to display the ::before and ::after elements */
+.cell {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell.x::before,
+.cell.x::after {
+    position: absolute;
+    content: ''; /*this is required for ::before and ::after elements so they are rendered*/
+    background-color: hsl(180deg 30% 45%);
+    height: var(--mark-size);
+    width: calc(var(--mark-size) * 0.15);
+}
+
+/* we need to rotate the ::before and ::after element seperately (different angles) */
+.cell.x::before {
+    transform: rotate(45deg);
+}
+
+.cell.x::after {
+    transform: rotate(-45deg);
+}
+
+.cell.o::before,
+.cell.o::after {
+    position: absolute;
+    content: '';
+    border-radius: 50%;
+    border: 20px solid hsl(180deg 30% 45%);
+    height: var(--mark-size);
+    width: var(--mark-size);
 }
 
 button {
@@ -37,6 +78,9 @@ button {
 }   
 
 .modal {
+    color: white;
+    font-size: 3rem;
+    text-align: center;
     position: fixed;
     left: 50%;
     top: 50%;
