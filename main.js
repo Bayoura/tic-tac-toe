@@ -1,4 +1,4 @@
-const panels_button = document.querySelectorAll('[data-panel]');
+const cells_button = document.querySelectorAll('[data-cell]');
 const modal_div = document.querySelector('[data-modal]');
 const result_p = document.querySelector('[data-result]');
 const restart_button = document.querySelector('[data-restart]');
@@ -8,37 +8,37 @@ let gameboardModule = (function() {
     // let gameboard = [];
     let round = 0;
     
-    let render = function(panel) {
-        if (panel.innerText != '') {
+    let render = function(cell) {
+        if (cell.innerText != '') {
             return;
         } else if (round % 2 == 0) {
-            panel.innerText = signs[0];    
+            cell.innerText = signs[0];    
             checkForWin();
             round++;
         } else {
-            panel.innerText = signs[1];
+            cell.innerText = signs[1];
             checkForWin();
             round++;
         }
     }
 
     let checkForWin = function() {
-        if (panels_button[0].innerText != '' && panels_button[0].innerText == panels_button[1].innerText && panels_button[0].innerText == panels_button[2].innerText) {
-            announceResult(panels_button[0].innerText);     
-        } else if (panels_button[3].innerText != '' && panels_button[3].innerText == panels_button[4].innerText && panels_button[4].innerText == panels_button[5].innerText) {
-            announceResult(panels_button[3].innerText);     
-        } else if (panels_button[6].innerText != '' && panels_button[6].innerText == panels_button[7].innerText && panels_button[7].innerText == panels_button[8].innerText) {
-            announceResult(panels_button[6].innerText); 
-        } else if (panels_button[0].innerText != '' && panels_button[0].innerText == panels_button[3].innerText && panels_button[3].innerText == panels_button[6].innerText) {
-            announceResult(panels_button[0].innerText);     
-        } else if (panels_button[1].innerText != '' && panels_button[1].innerText == panels_button[4].innerText && panels_button[4].innerText == panels_button[7].innerText) {
-            announceResult(panels_button[1].innerText); 
-        } else if (panels_button[2].innerText != '' && panels_button[2].innerText == panels_button[5].innerText && panels_button[5].innerText == panels_button[8].innerText) {
-            announceResult(panels_button[2].innerText); 
-        } else if (panels_button[0].innerText != '' && panels_button[0].innerText == panels_button[4].innerText && panels_button[4].innerText == panels_button[8].innerText) {
-            announceResult(panels_button[0].innerText); 
-        } else if (panels_button[2].innerText != '' && panels_button[2].innerText == panels_button[4].innerText && panels_button[4].innerText == panels_button[6].innerText) {
-            announceResult(panels_button[2].innerText); 
+        if (cells_button[0].innerText != '' && cells_button[0].innerText == cells_button[1].innerText && cells_button[0].innerText == cells_button[2].innerText) {
+            announceResult(cells_button[0].innerText);     
+        } else if (cells_button[3].innerText != '' && cells_button[3].innerText == cells_button[4].innerText && cells_button[4].innerText == cells_button[5].innerText) {
+            announceResult(cells_button[3].innerText);     
+        } else if (cells_button[6].innerText != '' && cells_button[6].innerText == cells_button[7].innerText && cells_button[7].innerText == cells_button[8].innerText) {
+            announceResult(cells_button[6].innerText); 
+        } else if (cells_button[0].innerText != '' && cells_button[0].innerText == cells_button[3].innerText && cells_button[3].innerText == cells_button[6].innerText) {
+            announceResult(cells_button[0].innerText);     
+        } else if (cells_button[1].innerText != '' && cells_button[1].innerText == cells_button[4].innerText && cells_button[4].innerText == cells_button[7].innerText) {
+            announceResult(cells_button[1].innerText); 
+        } else if (cells_button[2].innerText != '' && cells_button[2].innerText == cells_button[5].innerText && cells_button[5].innerText == cells_button[8].innerText) {
+            announceResult(cells_button[2].innerText); 
+        } else if (cells_button[0].innerText != '' && cells_button[0].innerText == cells_button[4].innerText && cells_button[4].innerText == cells_button[8].innerText) {
+            announceResult(cells_button[0].innerText); 
+        } else if (cells_button[2].innerText != '' && cells_button[2].innerText == cells_button[4].innerText && cells_button[4].innerText == cells_button[6].innerText) {
+            announceResult(cells_button[2].innerText); 
         } else if (round == 8) {
             announceResult('T');
         }       
@@ -59,7 +59,7 @@ let gameboardModule = (function() {
         modal_div.classList.remove('active');
         result_p.innerText = '';
         round = 0;
-        panels_button.forEach(panel => panel.innerText = ''); 
+        cells_button.forEach(cell => cell.innerText = ''); 
     }
 
     return {
@@ -77,9 +77,9 @@ function playerFactory() {
 // 
 }
 
-panels_button.forEach(panel => {
-    panel.addEventListener('click', () => {
-        gameboardModule.render(panel);
+cells_button.forEach(cell => {
+    cell.addEventListener('click', () => {
+        gameboardModule.render(cell);
         // gameboardModule.checkForWin();
     })
 })
