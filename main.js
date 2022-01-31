@@ -1,3 +1,4 @@
+const gameboard_div = document.querySelector('[data-gameboard]');
 const cells_button = document.querySelectorAll('[data-cell]');
 const modal_div = document.querySelector('[data-modal]');
 const result_p = document.querySelector('[data-result]');
@@ -9,14 +10,18 @@ let gameboardModule = (function() {
     let round = 0;
     
     let render = function(cell) {
-        if (cell.innerText != '') {
+        if (cell.classList.contains('x') || cell.classList.contains('o')) {
             return;
         } else if (round % 2 == 0) {
-            cell.innerText = signs[0];    
+            cell.classList.add('x');   
+            gameboard_div.classList.toggle('x'); 
+            gameboard_div.classList.toggle('o'); 
             checkForWin();
             round++;
         } else {
-            cell.innerText = signs[1];
+            cell.classList.add('o');
+            gameboard_div.classList.toggle('x'); 
+            gameboard_div.classList.toggle('o'); 
             checkForWin();
             round++;
         }
