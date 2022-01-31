@@ -28,7 +28,7 @@ h1 {
     cursor: pointer;
 }
 
-.gameboard-container {
+.gameboard {
     margin-top: 50px;
     display: grid;
     justify-content: center;
@@ -41,12 +41,15 @@ h1 {
 .cell {
     position: relative;
     display: flex;
+    border: none;
     justify-content: center;
     align-items: center;
 }
 
 .cell.x::before,
-.cell.x::after {
+.cell.x::after,
+.gameboard.x .cell:not(.x):not(.o):hover::before,
+.gameboard.x .cell:not(.x):not(.o):hover::after {
     position: absolute;
     content: ''; /*this is required for ::before and ::after elements so they are rendered*/
     background-color: hsl(180deg 30% 45%);
@@ -54,23 +57,42 @@ h1 {
     width: calc(var(--mark-size) * 0.15);
 }
 
-/* we need to rotate the ::before and ::after element seperately (different angles) */
-.cell.x::before {
+/* we need to rotate the ::before and ::after element separately (different angles) */
+.cell.x::before,
+.gameboard.x .cell:not(.x):not(.o):hover::before {
     transform: rotate(45deg);
 }
 
-.cell.x::after {
+.cell.x::after,
+.gameboard.x .cell:not(.x):not(.o):hover::after {
     transform: rotate(-45deg);
 }
 
 .cell.o::before,
-.cell.o::after {
+.cell.o::after,
+.gameboard.o .cell:not(.x):not(.o):hover::before,
+.gameboard.o .cell:not(.x):not(.o):hover::after {
     position: absolute;
     content: '';
     border-radius: 50%;
     border: 20px solid hsl(180deg 30% 45%);
     height: var(--mark-size);
     width: var(--mark-size);
+}
+
+.gameboard.o .cell:not(.x):not(.o):hover::before,
+.gameboard.o .cell:not(.x):not(.o):hover::after {
+    border-color: hsl(180deg 25% 70%);
+}
+
+.gameboard.x .cell:not(.x):not(.o):hover::before,
+.gameboard.x .cell:not(.x):not(.o):hover::after {
+    background-color: hsl(180deg 25% 70%);
+}
+
+.cell.x:hover,
+.cell.o:hover {
+    cursor: not-allowed;
 }
 
 button {
