@@ -99,38 +99,23 @@ button {
     cursor: pointer;
 }   
 
-.modal {
-    color: white;
-    font-size: 3rem;
-    text-align: center;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    transition: 300ms ease-in;
-    z-index: 10;
-}
-
-.modal.active {
-    transform: translate(-50%, -50%) scale(1);
-}
-
-.overlay {
+.result-screen {
     background-color: hsl(0deg 0% 0% / 80%);
+    color: hsl(0deg 100% 100%);
+    font-size: 3rem;
     position: fixed;
-    opacity: 0;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    transition: 300ms ease-in;
-    pointer-events: none;
-    z-index: 5;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-.overlay.active {
-    pointer-events: all;
-    opacity: 1;
+.result-screen.active {
+    display: flex;
 }
 
 footer {
