@@ -23,24 +23,29 @@ let gameboardModule = (function() {
     let startGame = function() {
         turnX = true;
         updateHoverMark();
+        resultScreen_div.classList.remove('active');
+        result_p.innerText = '';
 
-        // once: true ensures that the event listener only fires once for each element
         cells_button.forEach(cell => {
-            cell.addEventListener('click', () => {render(cell)}, { once: true }); 
+            cell.classList.remove(x);
+            cell.classList.remove(o);
+            cell.removeEventListener('click', render); //IMPORTANT!! Otherwise the event listeners will stack
+            cell.addEventListener('click', render, { once: true }); // `once: true` ensures that the event listener only fires once for each element
         })
-        restart_button.addEventListener('click', clearGameboard);
+        restart_button.addEventListener('click', startGame);
     }
-    
-    let render = function(cell) {
+
+    let render = function(clickedCell) {
+        let cell = clickedCell.target;
         let currentTurn = turnX ? x : o;
-        cell.classList.add(currentTurn);
-        updateTurn();
-        updateHoverMark();
+        cell.classList.add(currentTurn); 
         if (checkForWin(currentTurn)) {
-            result_p.innerText = `${currentTurn.toUpperCase()} is the winner!`;
-            setTimeout(() => resultScreen_div.classList.add('active'), 300);
+            endGame(false, currentTurn);
+        } else if (checkForDraw()) {
+            endGame(true, currentTurn);
         } else {
-            checkForDraw();
+            updateTurn();
+            updateHoverMark();
         }
     }
 
@@ -58,30 +63,27 @@ let gameboardModule = (function() {
         }
     }
 
+    let endGame = function(isDraw, currentTurn) {
+        if (isDraw) {
+            result_p.innerText = 'It\'s a draw!';
+        } else {
+            result_p.innerText = `${currentTurn.toUpperCase()} is the winner!`;
+        }
+        resultScreen_div.classList.add('active');
+    }
+
     let checkForWin = function(currentTurn) {   
         return winCombos.some(combination => {
             return combination.every(index => {
                 return Array.from(cells_button)[index].classList.contains(currentTurn);
             })
         })
-
     }
 
     let checkForDraw = function() {
-        if (Array.from(cells_button).every(cell => cell.classList.contains(x) || cell.classList.contains(o))) {
-            result_p.innerText = 'It\'s a draw!';
-            setTimeout(() => resultScreen_div.classList.add('active'), 300);
-        }
-    }
-
-    let clearGameboard = function() {
-        resultScreen_div.classList.remove('active');
-        result_p.innerText = '';
-        cells_button.forEach(cell => {
-            cell.classList.remove(x);
-            cell.classList.remove(o);
-        }); 
-        startGame();
+        return Array.from(cells_button).every(cell => {
+            return cell.classList.contains(x) || cell.classList.contains(o);
+        })        
     }
 
     return {
@@ -99,6 +101,3 @@ gameboardModule.startGame();
 // //       }
 // // 
 // }
-
-
-
