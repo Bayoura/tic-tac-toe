@@ -1,98 +1,104 @@
 const gameboard_div = document.querySelector('[data-gameboard]');
 const cells_button = document.querySelectorAll('[data-cell]');
-const modal_div = document.querySelector('[data-modal]');
-const result_p = document.querySelector('[data-result]');
-const restart_button = document.querySelector('[data-restart]');
-const overlay_div = document.querySelector('[data-overlay]');
+const resultScreen_div = document.querySelector('[data-resultScreen]');
+const result_p = document.querySelector('[data-resultMessage]');
+const restart_button = document.querySelector('[data-restartButton]');
 
 let gameboardModule = (function() {
-    // let gameboard = [];
-    let round = 0;
+
+    let turnX;
+    const x = 'x';
+    const o = 'o';
+    const winCombos = [
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [2,4,6]
+    ]
+
+    let startGame = function() {
+        turnX = true;
+        updateHoverMark();
+
+        // once: true ensures that the event listener only fires once for each element
+        cells_button.forEach(cell => {
+            cell.addEventListener('click', () => {render(cell)}, { once: true }); 
+        })
+        restart_button.addEventListener('click', clearGameboard);
+    }
     
     let render = function(cell) {
-        if (cell.classList.contains('x') || cell.classList.contains('o')) {
-            return;
-        } else if (round % 2 == 0) {
-            cell.classList.add('x');   
-            gameboard_div.classList.toggle('x'); 
-            gameboard_div.classList.toggle('o'); 
-            checkForWin();
-            round++;
+        let currentTurn = turnX ? x : o;
+        cell.classList.add(currentTurn);
+        updateTurn();
+        updateHoverMark();
+        if (checkForWin(currentTurn)) {
+            result_p.innerText = `${currentTurn.toUpperCase()} is the winner!`;
+            setTimeout(() => resultScreen_div.classList.add('active'), 300);
         } else {
-            cell.classList.add('o');
-            gameboard_div.classList.toggle('x'); 
-            gameboard_div.classList.toggle('o'); 
-            checkForWin();
-            round++;
+            checkForDraw();
         }
     }
 
-    let checkForWin = function() {
-        if (cells_button[0].innerText != '' && cells_button[0].innerText == cells_button[1].innerText && cells_button[0].innerText == cells_button[2].innerText) {
-            announceResult(cells_button[0].innerText);     
-        } else if (cells_button[3].innerText != '' && cells_button[3].innerText == cells_button[4].innerText && cells_button[4].innerText == cells_button[5].innerText) {
-            announceResult(cells_button[3].innerText);     
-        } else if (cells_button[6].innerText != '' && cells_button[6].innerText == cells_button[7].innerText && cells_button[7].innerText == cells_button[8].innerText) {
-            announceResult(cells_button[6].innerText); 
-        } else if (cells_button[0].innerText != '' && cells_button[0].innerText == cells_button[3].innerText && cells_button[3].innerText == cells_button[6].innerText) {
-            announceResult(cells_button[0].innerText);     
-        } else if (cells_button[1].innerText != '' && cells_button[1].innerText == cells_button[4].innerText && cells_button[4].innerText == cells_button[7].innerText) {
-            announceResult(cells_button[1].innerText); 
-        } else if (cells_button[2].innerText != '' && cells_button[2].innerText == cells_button[5].innerText && cells_button[5].innerText == cells_button[8].innerText) {
-            announceResult(cells_button[2].innerText); 
-        } else if (cells_button[0].innerText != '' && cells_button[0].innerText == cells_button[4].innerText && cells_button[4].innerText == cells_button[8].innerText) {
-            announceResult(cells_button[0].innerText); 
-        } else if (cells_button[2].innerText != '' && cells_button[2].innerText == cells_button[4].innerText && cells_button[4].innerText == cells_button[6].innerText) {
-            announceResult(cells_button[2].innerText); 
-        } else if (round == 8) {
-            announceResult('T');
-        }       
+    let updateTurn = function() {
+        turnX = !turnX;
     }
 
-    let announceResult = function(winner) {
-        overlay_div.classList.add('active');
-        modal_div.classList.add('active');
-        if (winner == 'T') {
-            result_p.innerText = 'It\'s a tie!';
+    let updateHoverMark = function(nextTurn) {
+        gameboard_div.classList.remove(x);
+        gameboard_div.classList.remove(o);
+        if (turnX) {
+            gameboard_div.classList.add(x);
         } else {
-            result_p.innerText = `${winner} has won this game!`;
+            gameboard_div.classList.add(o);
+        }
+    }
+
+    let checkForWin = function(currentTurn) {   
+        return winCombos.some(combination => {
+            return combination.every(index => {
+                return Array.from(cells_button)[index].classList.contains(currentTurn);
+            })
+        })
+
+    }
+
+    let checkForDraw = function() {
+        if (Array.from(cells_button).every(cell => cell.classList.contains(x) || cell.classList.contains(o))) {
+            result_p.innerText = 'It\'s a draw!';
+            setTimeout(() => resultScreen_div.classList.add('active'), 300);
         }
     }
 
     let clearGameboard = function() {
-        overlay_div.classList.remove('active');
-        modal_div.classList.remove('active');
+        resultScreen_div.classList.remove('active');
         result_p.innerText = '';
-        round = 0;
-        cells_button.forEach(cell => cell.innerText = ''); 
+        cells_button.forEach(cell => {
+            cell.classList.remove(x);
+            cell.classList.remove(o);
+        }); 
+        startGame();
     }
 
     return {
-        render,
-        clearGameboard
+        startGame
     }
 })();
 
-function playerFactory() {
-//     return {
-//         points,
-//         sign? (x or o),
-//         yourTurn?? (true or false)
-//       }
-// 
-}
+gameboardModule.startGame();
 
-cells_button.forEach(cell => {
-    cell.addEventListener('click', () => {
-        gameboardModule.render(cell);
-        // gameboardModule.checkForWin();
-    })
-})
+// function playerFactory() {
+// //     return {
+// //         points,
+// //         sign? (x or o),
+// //         yourTurn?? (true or false)
+// //       }
+// // 
+// }
 
-restart_button.addEventListener('click', () => {
-    gameboardModule.clearGameboard();
-});
-
-let signs = ['X','O'];
 
 
