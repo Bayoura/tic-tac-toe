@@ -2,13 +2,18 @@ const gameboard_div = document.querySelector('[data-gameboard]');
 const cells_button = document.querySelectorAll('[data-cell]');
 const resultScreen_div = document.querySelector('[data-resultScreen]');
 const result_p = document.querySelector('[data-resultMessage]');
-const restart_button = document.querySelector('[data-restartButton]');
+const xScore_span = document.querySelector('[data-playerOneScore');
+const oScore_span = document.querySelector('[data-playerTwoScore');
+const newRound_button = document.querySelector('[data-newRoundButton]');
+const newGame_button = document.querySelector('[data-newGameButton]');
 
 let gameboardModule = (function() {
 
     let turnX;
     const x = 'x';
     const o = 'o';
+    let xScore = 0;
+    let oScore = 0;
     const winCombos = [
         [0,1,2],
         [3,4,5],
@@ -32,7 +37,14 @@ let gameboardModule = (function() {
             cell.removeEventListener('click', render); //IMPORTANT!! Otherwise the event listeners will stack
             cell.addEventListener('click', render, { once: true }); // `once: true` ensures that the event listener only fires once for each element
         })
-        restart_button.addEventListener('click', startGame);
+        newRound_button.addEventListener('click', startGame);
+        newGame_button.addEventListener('click', () => {
+            xScore = 0;
+            oScore = 0;
+            xScore_span.innerText = xScore;
+            oScore_span.innerText = oScore;
+            startGame();
+        });
     }
 
     let render = function(clickedCell) {
@@ -67,6 +79,13 @@ let gameboardModule = (function() {
         if (isDraw) {
             result_p.innerText = 'It\'s a draw!';
         } else {
+            if (turnX) {
+                xScore++;
+                xScore_span.innerText = xScore;
+            } else {
+                oScore++;
+                oScore_span.innerText = oScore;
+            }
             result_p.innerText = `${currentTurn.toUpperCase()} is the winner!`;
         }
         resultScreen_div.classList.add('active');
