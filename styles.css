@@ -45,6 +45,8 @@ h1 {
     font-size: 1.5rem;
 }
 
+/* ----------------------GAMEBOARD----------------- */
+
 .gameboard {
     margin-top: 50px;
     display: grid;
@@ -113,15 +115,10 @@ h1 {
     cursor: not-allowed;
 }
 
-button {
-    cursor: pointer;
-}   
+/* ---------------------MODALS-------------------------- */
 
-.result-screen {
+.overlay {
     background-color: hsl(0deg 0% 0% / 80%);
-    color: hsl(0deg 100% 100%);
-    font-size: 5rem;
-    font-weight: bold;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -130,6 +127,53 @@ button {
     display: none;
     justify-content: center;
     align-items: center;
+}
+
+.overlay.active {
+    display: flex;
+}
+
+.names-input-container div {
+    background-color: hsl(0deg 100% 100%);
+    border-radius: 4px;
+    color: hsl(180deg 40% 30%);
+    font-size: 1.7rem;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+input {
+    background: hsl(180deg 30% 45%);
+    border-radius: 4px;
+    border: none;
+    color: white;
+    font-size: 1.3rem;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: hsl(180deg 25% 70%);
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: hsl(180deg 25% 70%);
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: hsl(180deg 25% 70%);
+} 
+
+.result-screen {
+    background-color: hsl(0deg 0% 0% / 80%);
+    color: hsl(0deg 100% 100%);
+    font-size: 5rem;
+    font-weight: bold;
     flex-direction: column;
 }
 
@@ -137,26 +181,51 @@ button {
     display: flex;
 }
 
+/* --------------------BUTTONS---------------------- */
+
+.names-input-container button,
 .result-screen button {
-    background-color:hsl(180deg 40% 40%);
+    cursor: pointer;
     border: 5px dotted transparent;
+    border-radius: 4px;
     color: hsl(0deg 100% 100%);
     margin-top: 20px;
     padding: 5px 10px;
-    border-radius: 3px;
     outline: none;
     font-size: 2rem;
     font-weight: bold;
+}  
+
+.names-input-container button {
+    background-color:hsl(330deg 40% 45%);  
+    transition: 400ms ease-in;
+}
+
+.names-input-container button:hover {
+    background-color:hsl(180deg 40% 30%);;
+    transform: rotate(360deg);
+}
+
+.names-input-container button:active {
+    border: 5px dotted hsl(330deg 50% 70%);
+}
+
+.result-screen button {
+    background-color:hsl(180deg 40% 40%);
+    transition: 300ms ease-in;
 }
 
 .result-screen button:hover {
     background-color: hsl(0deg 100% 100%);
     color:hsl(180deg 40% 40%);
+    transform: scale(1.1);
 }
 
 .result-screen button:active {
-    border: 5px dotted hsl(330deg 50% 70%);
+    border: 5px dotted hsl(330deg 50% 70%); 
 }
+
+/* -----------------------------FOOTER-------------------------------- */
 
 footer {
     text-align: center;
