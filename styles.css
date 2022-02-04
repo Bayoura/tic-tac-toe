@@ -133,18 +133,27 @@ h1 {
     display: flex;
 }
 
+.names-input-container form {
+    padding: 25px;
+}
+
+.names-input-container div {
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.names-input-container form, 
 .names-input-container div {
     background-color: hsl(0deg 100% 100%);
     border-radius: 4px;
     color: hsl(180deg 40% 30%);
     font-size: 1.7rem;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 10px 0;
 }
+
 
 input {
     background: hsl(180deg 30% 45%);
@@ -189,7 +198,6 @@ input {
     border: 5px dotted transparent;
     border-radius: 4px;
     color: hsl(0deg 100% 100%);
-    margin-top: 20px;
     padding: 5px 10px;
     outline: none;
     font-size: 2rem;
@@ -197,7 +205,8 @@ input {
 }  
 
 .names-input-container button {
-    background-color:hsl(330deg 40% 45%);  
+    background-color:hsl(330deg 40% 45%); 
+    margin-top: 10px; 
     transition: 400ms ease-in;
 }
 
@@ -212,6 +221,7 @@ input {
 
 .result-screen button {
     background-color:hsl(180deg 40% 40%);
+    margin-top: 20px;
     transition: 300ms ease-in;
 }
 
