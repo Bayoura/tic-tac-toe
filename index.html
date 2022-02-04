@@ -29,20 +29,20 @@
                 <button type="button" class="cell" data-cell></button>
                 <button type="button" class="cell" data-cell></button>         
             </div>
-            <div class="names-input-container overlay" data-namesInput>
-                <div>
+            <div class="names-input-container overlay active" data-namesInput>
+                <form action="/" method="get" data-inputForm>
                     <h2>Enter your names:</h2>
                     <div>
                         <label for="name-player-one">Player One:</label>
-                        <input type="text" id="name-player-one" name="name-player-one" required maxlength="15" placeholder="The Destroyer of Worlds">
+                        <input type="text" id="name-player-one" name="name-player-one" required maxlength="30" placeholder="The Destroyer of Worlds">
                     </div>
                     <div>
                         <label for="name-player-two">Player Two:</label>
-                        <input type="text" id="name-player-two" name="name-player-two" required maxlength="15" placeholder="Jeff">
+                        <input type="text" id="name-player-two" name="name-player-two" required maxlength="30" placeholder="Jeff">
                     </div>
                     <button type="button" data-enterNamesButton>Enter</button>
                 </div>
-            </div>
+            </form>
             <div class="result-screen overlay" data-resultScreen>
                 <p data-resultMessage></p>
                 <button type="button" data-newRoundButton>New Round</button>
