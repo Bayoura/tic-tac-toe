@@ -28,6 +28,23 @@ h1 {
     padding: 60px 0 70px 0;
 }
 
+.score-board {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px 0;
+    background-color: hsl(180deg 40% 40%);
+    color: hsl(0deg 100% 100%);
+}
+
+.score-container {
+    font-size: 3rem;
+}
+
+.player-label {
+    font-size: 1.5rem;
+}
+
 .gameboard {
     margin-top: 50px;
     display: grid;
