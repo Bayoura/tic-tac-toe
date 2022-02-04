@@ -11,6 +11,13 @@
     <body>
         <main>
             <h1>Tic Tac Toe</h1>
+            <div class="score-board" data-scoreboard>
+                <div id="player-one" class="player-label">Player One</div>
+                <div class="score-container">
+                    <span data-playerOneScore>0</span>:<span data-playerTwoScore>0</span>
+                </div>
+                <div id="player-two" class="player-label">Player Two</div>
+            </div>
             <div class="gameboard" data-gameboard>
                 <button type="button" class="cell" data-cell></button>
                 <button type="button" class="cell" data-cell></button>
@@ -22,9 +29,17 @@
                 <button type="button" class="cell" data-cell></button>
                 <button type="button" class="cell" data-cell></button>         
             </div>
+            <div class="names-input">
+                <p>Enter your names:</p>
+                <label for="name-player-one">Player One:</label>
+                <input type="text" id="name-player-one" name="name-player-one" required placeholder="The Destroyer of Worlds">
+                <label for="name-player-two">Player Two:</label>
+                <input type="text" id="name-player-two" name="name-player-two" required placeholder="Jeff">
+            </div>
             <div class="result-screen" data-resultScreen>
                 <p data-resultMessage></p>
-                <button type="button" data-restartButton>Restart Game</button>
+                <button type="button" data-newRoundButton>New Round</button>
+                <button type="button" data-newGameButton>New Game</button>
             </div>
         </main>
         <footer>
