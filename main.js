@@ -1,3 +1,8 @@
+const namesInput_div = document.querySelector('[data-namesInput]');
+const inputForm_form = document.querySelector('[data-inputForm]')
+const xName_input = document.getElementById('name-player-one');
+const oName_input = document.getElementById('name-player-two');
+const submitNames_button = document.querySelector('[data-enterNamesButton]');
 const gameboard_div = document.querySelector('[data-gameboard]');
 const cells_button = document.querySelectorAll('[data-cell]');
 const resultScreen_div = document.querySelector('[data-resultScreen]');
@@ -28,6 +33,7 @@ let gameboardModule = (function() {
     let startGame = function() {
         turnX = true;
         updateHoverMark();
+        namesInput_div.classList.remove('active'); 
         resultScreen_div.classList.remove('active');
         result_p.innerText = '';
 
@@ -37,8 +43,10 @@ let gameboardModule = (function() {
             cell.removeEventListener('click', render); //IMPORTANT!! Otherwise the event listeners will stack
             cell.addEventListener('click', render, { once: true }); // `once: true` ensures that the event listener only fires once for each element
         })
+
         newRound_button.addEventListener('click', startGame);
         newGame_button.addEventListener('click', () => {
+            namesInput_div.classList.add('active');
             xScore = 0;
             oScore = 0;
             xScore_span.innerText = xScore;
@@ -110,13 +118,25 @@ let gameboardModule = (function() {
     }
 })();
 
-gameboardModule.startGame();
+document.addEventListener('DOMContentLoaded', () => {    
+    submitNames_button.addEventListener('click', e => {    
+        e.preventDefault(); //stop form from submitting   
 
-// function playerFactory() {
-// //     return {
-// //         points,
-// //         sign? (x or o),
-// //         yourTurn?? (true or false)
-// //       }
-// // 
+        //check if required fields are filled out
+        let checkStatus = inputForm_form.checkValidity();
+        inputForm_form.reportValidity();
+        if (checkStatus) {
+            gameboardModule.startGame();
+        }
+    })    
+});
+
+// function playerFactory(name) {
+//     const player = {};
+//     player.name = name;
+//     return player;
 // }
+
+// const playerOne = playerFactory(xName_input.value);
+
+//pass playerOne and playerTwo into startGame() ?
