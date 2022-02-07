@@ -2,15 +2,15 @@ const namesInput_div = document.querySelector('[data-namesInput]');
 const inputForm_form = document.querySelector('[data-inputForm]')
 const xName_input = document.getElementById('name-player-one');
 const oName_input = document.getElementById('name-player-two');
+const submitNames_button = document.querySelector('[data-enterNamesButton]');
 const xName_div = document.getElementById('player-one')
 const oName_div = document.getElementById('player-two')
-const submitNames_button = document.querySelector('[data-enterNamesButton]');
+const xScore_span = document.querySelector('[data-playerOneScore');
+const oScore_span = document.querySelector('[data-playerTwoScore');
 const gameboard_div = document.querySelector('[data-gameboard]');
 const cells_button = document.querySelectorAll('[data-cell]');
 const resultScreen_div = document.querySelector('[data-resultScreen]');
 const result_p = document.querySelector('[data-resultMessage]');
-const xScore_span = document.querySelector('[data-playerOneScore');
-const oScore_span = document.querySelector('[data-playerTwoScore');
 const newRound_button = document.querySelector('[data-newRoundButton]');
 const newGame_button = document.querySelector('[data-newGameButton]');
 
@@ -19,8 +19,6 @@ let gameboardModule = (function() {
     let turnX;
     const x = 'x';
     const o = 'o';
-    // let xScore = 0;
-    // let oScore = 0;
     const winCombos = [
         [0,1,2],
         [3,4,5],
@@ -41,20 +39,6 @@ let gameboardModule = (function() {
         resultScreen_div.classList.remove('active');
         result_p.innerText = '';
 
-        cells_button.forEach(cell => {
-            cell.classList.remove(x);
-            cell.classList.remove(o);
-            cell.removeEventListener('click', render); // IMPORTANT!! Otherwise the event listeners will stack
-            cell.addEventListener('click', render, { once: true }); // `once: true` ensures that the event listener only fires once for each element
-        })
-
-        newRound_button.addEventListener('click', startGame);
-        newGame_button.addEventListener('click', () => {
-            resultScreen_div.classList.remove('active');
-            namesInput_div.classList.add('active');
-            startGame();
-        });
-
         document.addEventListener('DOMContentLoaded', () => {    
             submitNames_button.addEventListener('click', e => {    
                 e.preventDefault(); //stop form from submitting   
@@ -72,6 +56,21 @@ let gameboardModule = (function() {
                 }
             })    
         });
+
+        cells_button.forEach(cell => {
+            cell.classList.remove(x);
+            cell.classList.remove(o);
+            cell.removeEventListener('click', render); // IMPORTANT!! Otherwise the event listeners will stack
+            cell.addEventListener('click', render, { once: true }); // `once: true` ensures that the event listener only fires once for each element
+        })
+
+        newRound_button.addEventListener('click', startGame);
+        newGame_button.addEventListener('click', () => {
+            resultScreen_div.classList.remove('active');
+            namesInput_div.classList.add('active');
+            startGame();
+        });
+
     }
 
     let createPlayers = function() {
@@ -84,9 +83,9 @@ let gameboardModule = (function() {
         let currentTurn = turnX ? x : o;
         cell.classList.add(currentTurn); 
         if (checkForWin(currentTurn)) {
-            endGame(false, currentTurn);
+            endGame(false);
         } else if (checkForDraw()) {
-            endGame(true, currentTurn);
+            endGame(true);
         } else {
             updateTurn();
             updateHoverMark();
