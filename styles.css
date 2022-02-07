@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400&display=swap');
+
 *,
 *::after,
 *::before {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family:'Lucida Sans', sans-serif;
+    font-family: 'Rowdies', cursive;
 }
 
 :root {
@@ -21,10 +23,9 @@ body {
 
 h1 {
     background-color: hsl(180deg 40% 40%/60%);
-    border-bottom: 5px solid hsl(180deg 40% 40%);
     color: hsl(0deg 100% 100%);
-    text-align: center;
     font-size: 4rem;
+    text-align: center;
     padding: 60px 0 70px 0;
 }
 
@@ -61,9 +62,9 @@ h1 {
 
 /* we need to display the ::before and ::after elements */
 .cell {
+    border: none;
     position: relative;
     display: flex;
-    border: none;
     justify-content: center;
     align-items: center;
 }
@@ -157,11 +158,10 @@ h1 {
     align-items: center;
 }
 
-
 input {
     background: hsl(180deg 30% 45%);
-    border-radius: 4px;
     border: none;
+    border-radius: 4px;
     color: white;
     font-size: 1.3rem;
     padding: 10px;
@@ -185,7 +185,6 @@ input {
     background-color: hsl(0deg 0% 0% / 80%);
     color: hsl(0deg 100% 100%);
     font-size: 5rem;
-    font-weight: bold;
     flex-direction: column;
 }
 
@@ -204,7 +203,6 @@ input {
     padding: 5px 10px;
     outline: none;
     font-size: 2rem;
-    font-weight: bold;
 }  
 
 .names-input-container button {
