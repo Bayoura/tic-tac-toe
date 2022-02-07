@@ -29,20 +29,23 @@ h1 {
 }
 
 .score-board {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 10px 0;
     background-color: hsl(180deg 40% 40%);
     color: hsl(0deg 100% 100%);
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
 }
 
 .score-container {
     font-size: 3rem;
+    position: absolute;
+    margin: 0 10px;
 }
 
 .player-label {
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 
 /* ----------------------GAMEBOARD----------------- */
@@ -253,4 +256,14 @@ footer a:hover {
 
 footer a:active {
     border: 3px dotted hsl(330deg 50% 70%);
+}
+
+@media (max-width: 800px) {
+    .score-board {
+        padding: 10px 0;
+    }
+
+    .score-container {
+        position: static;
+    }
 }
